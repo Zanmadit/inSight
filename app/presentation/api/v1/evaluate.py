@@ -106,7 +106,11 @@ async def resume_evaluation(
         raise ThreadNotFoundError(thread_id)
 
     if body.human_review is not None:
-        await graph.aupdate_state(config, {"human_review": body.human_review})
+        await graph.aupdate_state(
+            config,
+            {"human_review": body.human_review},
+            as_node="check_integrity",
+        )
 
     try:
         result = await graph.ainvoke(None, config)
