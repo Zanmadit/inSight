@@ -5,10 +5,11 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 WORKDIR /build
 
-COPY pyproject.toml ./
+COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev --no-install-project
 
 COPY app/ app/
+COPY README.md ./
 RUN uv sync --frozen --no-dev
 
 # ---------- Stage 2: Runtime ----------
