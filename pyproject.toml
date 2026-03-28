@@ -9,6 +9,8 @@ dependencies = [
     "langgraph",
     "langchain-openai",
     "pydantic-settings",
+    "langgraph-cli[inmem]>=0.4.19",
+    "langsmith>=0.7.22",
 ]
 
 [build-system]

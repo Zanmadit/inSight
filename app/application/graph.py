@@ -57,3 +57,29 @@ def build_evaluation_graph(checkpointer: BaseCheckpointSaver) -> CompiledStateGr
         checkpointer=checkpointer,
         interrupt_before=["synthesizer"],
     )
+
+
+def make_studio_graph() -> StateGraph:
+    """Return an *uncompiled* ``StateGraph`` for LangGraph Studio.
+
+    Studio supplies its own checkpointer and compiles the graph internally,
+    so we hand back the builder rather than a ``CompiledStateGraph``.
+    """
+    graph = StateGraph(CandidateState)
+
+    graph.add_node("analyze_essays", analyze_essays_node)
+    graph.add_node("analyze_trajectory", analyze_trajectory_node)
+    graph.add_node("check_integrity", check_integrity_node)
+    graph.add_node("synthesizer", synthesizer_node)
+
+    graph.add_edge(START, "analyze_essays")
+    graph.add_edge(START, "analyze_trajectory")
+    graph.add_edge(START, "check_integrity")
+
+    graph.add_edge("analyze_essays", "synthesizer")
+    graph.add_edge("analyze_trajectory", "synthesizer")
+    graph.add_edge("check_integrity", "synthesizer")
+
+    graph.add_edge("synthesizer", END)
+
+    return graph
