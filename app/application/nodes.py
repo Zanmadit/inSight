@@ -27,11 +27,29 @@ logger = logging.getLogger(__name__)
 
 
 def _get_llm(config: RunnableConfig) -> ChatOpenAI:
-    """Extract the LLM client from the run configuration."""
+    """Extract the LLM client from the run configuration.
+
+    Falls back to constructing a client from environment variables when
+    the config does not carry an ``llm`` key (e.g. when invoked via
+    LangGraph Studio or the LangGraph API).
+    """
     llm: ChatOpenAI | None = config.get("configurable", {}).get("llm")
-    if llm is None:
-        raise LLMError("LLM client was not provided in the graph configuration.")
-    return llm
+    if llm is not None:
+        return llm
+
+    import os
+
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise LLMError(
+            "LLM client was not provided in the graph configuration and "
+            "OPENAI_API_KEY is not set in the environment."
+        )
+    return ChatOpenAI(
+        api_key=api_key,
+        model=os.getenv("OPENAI_MODEL", "gpt-4o"),
+        temperature=float(os.getenv("OPENAI_TEMPERATURE", "0.2")),
+    )
 
 
 # ---------------------------------------------------------------------------
