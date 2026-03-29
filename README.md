@@ -10,6 +10,9 @@ FastAPI, LangGraph, and LangChain.
 - **Explainable Scoring** — Every recommendation includes a narrative explanation citing specific evidence.
 - **Clean Architecture** — Strict separation into domain, application, infrastructure, and presentation layers.
 
+## Project Architecture
+![Architecture](docs/architecture.png)
+
 ## Quick Start
 
 ```bash
