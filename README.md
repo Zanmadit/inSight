@@ -4,6 +4,10 @@
 
 inVision U is a full-stack admissions screening platform for university programmes. Applicants complete a profile, essay, and short video; an AI pipeline provides structured essay feedback and an advisory composite score for staff. **AI does not make admission decisions**: it recommends and explains only; the admissions committee has final authority. The product is designed with fairness guardrails: scoring prompts avoid demographic fields, and advisory outputs are clearly labeled for staff and applicants.
 
+
+## Project Architecture
+![Architecture](docs/architecture.png)
+
 ## Architecture Diagram
 
 ```
