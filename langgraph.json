@@ -1,9 +1,0 @@
-{
-  "$schema": "https://langgra.ph/schema.json",
-  "python_version": "3.12",
-  "dependencies": ["."],
-  "graphs": {
-    "candidate_evaluation": "./app/application/graph.py:make_studio_graph"
-  },
-  "env": ".env"
-}
